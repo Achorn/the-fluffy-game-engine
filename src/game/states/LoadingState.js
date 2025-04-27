@@ -4,7 +4,7 @@ import State from "./State";
 
 let assetsToLoad = [
   ["albumCover", "./images/blok.jpg"],
-  ["music", "./audio/josh-song.mp3"],
+  // ["music", "./audio/josh-song.mp3"],
 ];
 
 export default class LoadingState extends State {
