@@ -54,9 +54,7 @@ export async function load(assetArray, onComplete) {
     const extention = fileName
       .substring(fileName.lastIndexOf(".") + 1)
       .toLowerCase();
-    console.log(fileName);
     const type = AssetTypeLookup[extention];
-    console.log(type);
     if (type === AssetType.IMAGE) {
       return loadImage(key, fileName, onComplete);
     } else if (type === AssetType.SOUND) {

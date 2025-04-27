@@ -1,6 +1,6 @@
-import Object from "../../Object";
+import Shape from "../Shape";
 
-export default class Rectangle extends Object {
+export default class Rectangle extends Shape {
   constructor({
     startX = 0,
     startY = 0,

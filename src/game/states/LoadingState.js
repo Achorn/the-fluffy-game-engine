@@ -1,4 +1,5 @@
 import { load } from "../../engine/assetLoader";
+import Text from "../../engine/object/text/Text";
 import State from "./State";
 
 let assetsToLoad = [
@@ -7,10 +8,12 @@ let assetsToLoad = [
 ];
 
 export default class LoadingState extends State {
-  constructor(onLoadComplete) {
+  constructor(onLoadComplete, onFail) {
     super();
+    this.loadingText = new Text({ text: "Loading..." });
     load(assetsToLoad)
       .catch((error) => {
+        onFail(error);
         throw new TypeError(error);
       })
       .then(() => {
@@ -19,7 +22,6 @@ export default class LoadingState extends State {
   }
   update(deltaTime) {}
   draw(ctx) {
-    ctx.font = "30px Arial";
-    ctx.fillText("Loading...", 100, 100);
+    this.loadingText.draw(ctx);
   }
 }

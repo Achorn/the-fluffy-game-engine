@@ -1,6 +1,6 @@
-import Object from "../../Object";
+import Shape from "../Shape";
 
-export default class Circle extends Object {
+export default class Circle extends Shape {
   constructor({ startX = 0, startY = 0, radius = 50, color = "red" }) {
     super({ startX, startY });
     this.radius = radius;

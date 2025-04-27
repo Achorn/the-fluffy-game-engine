@@ -1,4 +1,5 @@
-import LevelOne from "./states/LevelOne";
+import ErrorState from "./states/ErrorState";
+import GameEngineExamplesState from "./states/GameEngineExamplesState.js";
 import LoadingState from "./states/LoadingState";
 
 let instance;
@@ -11,9 +12,10 @@ class Game {
 
     this.canvas = document.querySelector("#my-canvas");
     this.ctx = this.canvas.getContext("2d");
-    this.state = new LoadingState(() => {
-      this.state = new LevelOne();
-    });
+    this.state = new LoadingState(
+      () => (this.state = new GameEngineExamplesState()),
+      (err) => (this.state = new ErrorState(err))
+    );
   }
   init() {}
   load() {}
