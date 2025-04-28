@@ -18,4 +18,13 @@ export default class Rectangle extends Shape {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.startX, this.startY, this.width, this.height);
   }
+
+  inBounds({ x, y }) {
+    if (x > this.startX && x < this.startX + this.width) {
+      if (y > this.startY && y < this.startY + this.height) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

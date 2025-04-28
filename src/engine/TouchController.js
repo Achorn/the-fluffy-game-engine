@@ -4,6 +4,7 @@ export default class TouchController {
     this.startCords = null;
     this.currentCords = null;
     this.init(canvas);
+    this.debug;
   }
   init(canvas) {
     canvas.addEventListener("touchstart", this.handleStart);
@@ -44,12 +45,10 @@ export default class TouchController {
   update(deltaTime) {}
 
   draw(ctx) {
-    console.log(this.startCords);
-    // console.log("touch drawing");
-    // console.log(this.isPressed);
     if (this.isPressed === true) {
       ctx.lineWidth = 3;
 
+      // Start target
       //X
       ctx.strokeStyle = "blue";
       ctx.beginPath();
@@ -64,6 +63,7 @@ export default class TouchController {
 
       ctx.strokeStyle = "red";
 
+      // Current Target
       //X
       ctx.beginPath();
       ctx.moveTo(this.currentCords.x, 0);
