@@ -1,6 +1,7 @@
 import ErrorState from "./states/ErrorState";
 import GameEngineExamplesState from "./states/GameEngineExamplesState.js";
 import LoadingState from "./states/LoadingState";
+import TouchController from "../engine/touchController.js";
 
 let instance;
 
@@ -12,6 +13,7 @@ class Game {
 
     this.canvas = document.querySelector("#my-canvas");
     this.ctx = this.canvas.getContext("2d");
+    this.touchController = new TouchController(this.canvas);
     this.state = new LoadingState(
       () => (this.state = new GameEngineExamplesState()),
       (err) => (this.state = new ErrorState(err))
@@ -29,8 +31,8 @@ class Game {
 
     // console.log("game draw");
     this.state.draw(this.ctx);
-    // this.ctx.fillStyle = "red";
-    // this.ctx.fillRect(100, 100, 100, 100);
+
+    this.touchController.draw(this.ctx);
   }
 }
 
