@@ -1,8 +1,7 @@
 import ErrorState from "./states/ErrorState";
 import GameEngineExamplesState from "./states/GameEngineExamplesState.js";
 import LoadingState from "./states/LoadingState";
-import TouchController from "../engine/touchController.js";
-
+import TouchController from "../engine/TouchController.js";
 let instance;
 
 class Game {
