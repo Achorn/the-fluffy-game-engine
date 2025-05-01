@@ -48,11 +48,11 @@ export default class TouchController {
     if (this.isPressed === true) {
       ctx.globalAlpha = 0.4;
 
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 2;
 
       // Start target
       //X
-      ctx.strokeStyle = "blue";
+      ctx.strokeStyle = "purple";
       ctx.beginPath();
       ctx.moveTo(this.startCords.x, 0);
       ctx.lineTo(this.startCords.x, ctx.canvas.height);
