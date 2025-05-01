@@ -17,12 +17,24 @@ export default class GameEngineExamplesState extends State {
     this.button = new Button({
       startX: 20,
       startY: 270,
-      onPress: () => (this.button.text.text = "PRESSED"),
-      onRelease: () => (this.button.text.text = "RELEASED"),
+      onPress: () => {
+        this.button.text.text = "PRESSED";
+        assets.get("boom").play();
+      },
+      onRelease: () => {
+        this.button.text.text = "RELEASED";
+      },
     });
     this.checkBox = new CheckBoxButton({
       startX: 20,
       startY: 350,
+      active: false,
+      onRelease: () => {
+        let song = assets.get("boom");
+        if (song.playing()) {
+          song.pause();
+        } else song.play();
+      },
     });
   }
   update(deltaTime) {

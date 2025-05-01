@@ -1,6 +1,8 @@
 //asset loader from this guy
 // https://www.youtube.com/watch?v=47yNIKlTAro
 
+// THE THORN
+import { Howl } from "howler";
 const AssetType = {
   IMAGE: "image",
   SOUND: "sound",
@@ -11,6 +13,7 @@ const AssetTypeLookup = {
   webp: AssetType.IMAGE,
   mp3: AssetType.SOUND,
   ogg: AssetType.SOUND,
+  wav: AssetType.SOUND,
 };
 
 export const assets = new Map(); // holds potential asset elements
@@ -18,7 +21,6 @@ export const assets = new Map(); // holds potential asset elements
 function loadImage(key, fileName, onComplete) {
   return new Promise((resolve, reject) => {
     const image = new Image();
-
     image.addEventListener(
       "load",
       () => {
@@ -34,18 +36,18 @@ function loadImage(key, fileName, onComplete) {
 
 function loadSound(key, fileName, onComplete) {
   return new Promise((resolve, reject) => {
-    const sound = new Audio();
-
-    sound.addEventListener(
-      "canplay",
+    const sound = new Howl({
+      src: fileName,
+    });
+    sound.on(
+      "load",
       () => {
         resolve({ key, asset: sound });
         if (typeof onComplete === "function") onComplete({ fileName, sound });
       },
       { once: true }
     );
-    sound.addEventListener("error", (event) => reject({ fileName, event }));
-    sound.src = fileName;
+    sound.on("loaderror", (event) => reject({ fileName, event }));
   });
 }
 
@@ -70,69 +72,3 @@ export async function load(assetArray, onComplete) {
     }
   });
 }
-// ---------------------------------------------------//
-// ASSETS V3
-
-// export const assets = new Map(); // holds potential asset elements
-
-// // each asset has a key which we can reference in the game
-
-// export function loadImage(key, fileName, onComplete) {
-//   return new Promise((resolve, reject) => {
-//     const image = new Image();
-
-//     image.addEventListener(
-//       "load",
-//       () => {
-//         assets.set(key, image);
-
-//         // for clarity but not neccesary
-//         resolve({ fileName, image });
-
-//         // insuring callback is actually a cuntion before calling
-//         if (typeof onComplete === "function") onComplete({ fileName, image });
-//       },
-//       { once: true } // event listener will run only once and then be discarded. great for loading an aset once
-//     );
-//     image.src = fileName;
-//   });
-// }
-
-// export function loadSound(key, fileName, onComplete) {
-//   return new Promise((resolve, reject) => {
-//     const sound = new Audio();
-
-//     sound.addEventListener(
-//       "canplay",
-//       () => {
-//         assets.set(key, sound);
-//         resolve({ fileName, sound });
-//         if (typeof onComplete === "function") onComplete({ fileName, sound });
-//       },
-//       { once: true }
-//     );
-//     sound.src = fileName;
-//   });
-// // }
-
-//--------------------------------------------------- //
-
-// ASSET LOADER V1
-
-// let imageReady = false;
-// export function init() {
-//   image.addEventListener("load", () => (imageReady = true), { once: true });
-//   image.addEventListener("canplay", () => sound.play(), { once: true });
-
-//   image.src = "./assets/blok.jpg";
-//   sound.src = "./assets/josh-song.mp3";
-
-//   sound.play();
-//   sound.volume = 0.2;
-// }
-
-// export function main(ctx, deltaTime) {
-//   if (!imageReady) return;
-//   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-//   ctx.drawImage(image, 0, 0, image.width, image.height);
-// }

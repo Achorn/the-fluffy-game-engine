@@ -23,20 +23,20 @@ export default class CheckBoxButton extends Button {
       text,
     });
     this.active = active;
+    this.onRelease = () => {
+      this.active = !this.active;
+      onRelease();
+    };
     this.init();
   }
-  init() {
-    this.onRelease = () => {
-      if (this.active) {
-        this.text.text = "OFF";
-      } else {
-        this.text.text = "ON";
-      }
-      this.active = !this.active;
-    };
-  }
+  init() {}
   update(deltaTime) {
     super.update(deltaTime);
+    if (this.active) {
+      this.text.text = "ON";
+    } else {
+      this.text.text = "OFF";
+    }
   }
   draw(ctx) {
     super.draw(ctx);
