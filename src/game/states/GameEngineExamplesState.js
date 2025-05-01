@@ -5,6 +5,7 @@ import CheckBoxButton from "../../engine/object/component/button/check-box-butto
 import Text from "../../engine/object/text/Text";
 import State from "./State";
 import TextButton from "../../engine/object/component/button/text-button/TextButton";
+import Icon from "../../engine/object/shape/icon/Icon";
 
 export default class GameEngineExamplesState extends State {
   constructor() {
@@ -38,11 +39,13 @@ export default class GameEngineExamplesState extends State {
         assets.get("switch").play();
       },
     });
+    this.icon = new Icon({ image: assets.get("volumeUpIconSVG") });
   }
   update(deltaTime) {
     this.rectangle.update(deltaTime);
     this.button.update(deltaTime);
     this.checkBox.update(deltaTime);
+    this.icon.update(deltaTime);
   }
   draw(ctx) {
     // ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height);
@@ -51,5 +54,6 @@ export default class GameEngineExamplesState extends State {
     this.text.draw(ctx);
     this.button.draw(ctx);
     this.checkBox.draw(ctx);
+    this.icon.draw(ctx);
   }
 }

@@ -12,16 +12,20 @@ import { Howl } from "howler";
 const AssetType = {
   IMAGE: "image",
   SOUND: "sound",
+  SVG: "svg",
 };
 
 const AssetTypeLookup = {
   png: AssetType.IMAGE,
   jpg: AssetType.IMAGE,
   webp: AssetType.IMAGE,
+  svg: AssetType.IMAGE,
   mp3: AssetType.SOUND,
   wav: AssetType.SOUND,
   // ogg: AssetType.SOUND,
   // OGG files cause updload issues as of now
+  // //not dealing with svgs right now
+  // svg: AssetType.SVG,
 };
 
 export const assets = new Map(); // holds potential asset elements

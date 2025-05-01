@@ -3,6 +3,7 @@ import Text from "../../engine/object/text/Text";
 import State from "./State";
 
 import blockImage from "/images/blok.jpg";
+import volumeUpSVG from "/icons/volume.svg";
 import boomSOund from "/audio/sfx_exp_short_soft1.wav";
 import songSound from "/audio/josh-song.mp3";
 import fartSound from "/audio/fart-hearty-bwomp-locran-1-00-00.mp3";
@@ -10,6 +11,8 @@ import switchSound from "/audio/switch_002.wav";
 
 let assetsToLoad = [
   ["albumCover", blockImage],
+  ["soundOnIcon", "/icons/volume-up.png"],
+  ["volumeUpIconSVG", "/icons/volumeUp.svg"],
   ["boom", boomSOund],
   ["music", songSound],
   ["fart", fartSound],

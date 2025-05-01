@@ -2,7 +2,7 @@ import ErrorState from "./states/ErrorState";
 import GameEngineExamplesState from "./states/GameEngineExamplesState.js";
 import LoadingState from "./states/LoadingState";
 // import TouchController from "../engine/TouchController.js";
-import TouchController from "../engine/touchController.js";
+import TouchController from "../engine/TouchController.js";
 import SoundController from "../engine/SoundController.js";
 import { assets } from "../engine/assetLoader.js";
 
