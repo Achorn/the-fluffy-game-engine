@@ -10,7 +10,6 @@ export default class CheckBoxButton extends Button {
     onRelease = () => {},
     color = "purple",
     active = true,
-    text = "ON",
   }) {
     super({
       startX,
@@ -20,7 +19,6 @@ export default class CheckBoxButton extends Button {
       onPress,
       onRelease,
       color,
-      text,
     });
     this.active = active;
     this.onRelease = () => {
@@ -33,9 +31,7 @@ export default class CheckBoxButton extends Button {
   update(deltaTime) {
     super.update(deltaTime);
     if (this.active) {
-      this.text.text = "ON";
     } else {
-      this.text.text = "OFF";
     }
   }
   draw(ctx) {

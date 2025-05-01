@@ -1,10 +1,10 @@
 import { assets } from "../../engine/assetLoader";
 import Circle from "../../engine/object/shape/circle/Circle";
 import Rectangle from "../../engine/object/shape/rectangle/Rectangle";
-import Button from "../../engine/object/text/button/Button";
-import CheckBoxButton from "../../engine/object/text/button/check-box-button/CheckBoxButton";
+import CheckBoxButton from "../../engine/object/component/button/check-box-button/CheckBoxButton";
 import Text from "../../engine/object/text/Text";
 import State from "./State";
+import TextButton from "../../engine/object/component/button/text-button/TextButton";
 
 export default class GameEngineExamplesState extends State {
   constructor() {
@@ -18,16 +18,16 @@ export default class GameEngineExamplesState extends State {
     this.rectangle = new Rectangle({ startX: 20, startY: 50 });
     this.circle = new Circle({ startX: 20, startY: 160 });
 
-    this.button = new Button({
+    this.button = new TextButton({
       startX: 20,
       startY: 270,
-      text: "FART",
+      text: "Press Me",
       onPress: () => {
         this.button.text.text = "PRESSED";
         assets.get("fart").play();
       },
       onRelease: () => {
-        this.button.text.text = "Fart";
+        this.button.text.text = "Press Me";
       },
     });
     this.checkBox = new CheckBoxButton({
@@ -36,10 +36,6 @@ export default class GameEngineExamplesState extends State {
       active: false,
       onRelease: () => {
         assets.get("switch").play();
-        // let song = assets.get("boom");
-        // if (song.playing()) {
-        //   song.pause();
-        // } else song.play();
       },
     });
   }
