@@ -10,19 +10,24 @@ export default class GameEngineExamplesState extends State {
   constructor() {
     super();
     this.image = assets.get("albumCover");
-    this.text = new Text({ startX: 20, text: "Game Engine Object Examples" });
+    this.text = new Text({
+      startX: 20,
+      startY: 20,
+      text: "Game Engine Sandbox",
+    });
     this.rectangle = new Rectangle({ startX: 20, startY: 50 });
     this.circle = new Circle({ startX: 20, startY: 160 });
 
     this.button = new Button({
       startX: 20,
       startY: 270,
+      text: "FART",
       onPress: () => {
         this.button.text.text = "PRESSED";
-        assets.get("boom").play();
+        assets.get("fart").play();
       },
       onRelease: () => {
-        this.button.text.text = "RELEASED";
+        this.button.text.text = "Fart";
       },
     });
     this.checkBox = new CheckBoxButton({
@@ -30,10 +35,11 @@ export default class GameEngineExamplesState extends State {
       startY: 350,
       active: false,
       onRelease: () => {
-        let song = assets.get("boom");
-        if (song.playing()) {
-          song.pause();
-        } else song.play();
+        assets.get("switch").play();
+        // let song = assets.get("boom");
+        // if (song.playing()) {
+        //   song.pause();
+        // } else song.play();
       },
     });
   }

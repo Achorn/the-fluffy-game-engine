@@ -1,19 +1,27 @@
 //asset loader from this guy
 // https://www.youtube.com/watch?v=47yNIKlTAro
 
+// Event listener for user interaction to unlock audio
+// document.addEventListener('click', function() {
+//   unlockAudio();
+//   document.removeEventListener('click', arguments.callee); // Remove the listener after first click
+// });
+
 // THE THORN
 import { Howl } from "howler";
 const AssetType = {
   IMAGE: "image",
   SOUND: "sound",
 };
+
 const AssetTypeLookup = {
   png: AssetType.IMAGE,
   jpg: AssetType.IMAGE,
   webp: AssetType.IMAGE,
   mp3: AssetType.SOUND,
-  ogg: AssetType.SOUND,
   wav: AssetType.SOUND,
+  // ogg: AssetType.SOUND,
+  // OGG files cause updload issues as of now
 };
 
 export const assets = new Map(); // holds potential asset elements
@@ -38,6 +46,7 @@ function loadSound(key, fileName, onComplete) {
   return new Promise((resolve, reject) => {
     const sound = new Howl({
       src: fileName,
+      preload: true,
     });
     sound.on(
       "load",
