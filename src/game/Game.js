@@ -37,6 +37,13 @@ class Game {
   }
   draw() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+
+    this.processingCtx.clearRect(
+      0,
+      0,
+      this.ctx.canvas.width,
+      this.ctx.canvas.height
+    );
     this.state.draw(this.ctx);
     this.touchController.draw(this.ctx);
   }

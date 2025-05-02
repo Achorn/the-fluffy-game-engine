@@ -6,6 +6,7 @@ import Text from "../../engine/object/text/Text";
 import State from "./State";
 import TextButton from "../../engine/object/component/button/text-button/TextButton";
 import Icon from "../../engine/object/shape/icon/Icon";
+import IconButton from "../../engine/object/component/button/icon-button/IconButton";
 
 export default class GameEngineExamplesState extends State {
   constructor() {
@@ -25,7 +26,7 @@ export default class GameEngineExamplesState extends State {
       text: "Press Me",
       onPress: () => {
         this.button.text.text = "PRESSED";
-        assets.get("fart").play();
+        assets.get("switch").play();
       },
       onRelease: () => {
         this.button.text.text = "Press Me";
@@ -39,13 +40,30 @@ export default class GameEngineExamplesState extends State {
         assets.get("switch").play();
       },
     });
-    this.icon = new Icon({ image: assets.get("volumeUpIconSVG") });
+    this.icon = new Icon({
+      startX: 200,
+      startY: 450,
+      image: assets.get("volumeUpIconSVG"),
+      color: "orange",
+    });
+    this.iconTwo = new Icon({
+      startX: 100,
+      startY: 450,
+      image: assets.get("volumeUpIconSVG"),
+      color: "black",
+    });
+    this.iconButton = new IconButton({
+      startX: 20,
+      startY: 450,
+      image: assets.get("volumeUpIconSVG"),
+    });
   }
   update(deltaTime) {
     this.rectangle.update(deltaTime);
     this.button.update(deltaTime);
     this.checkBox.update(deltaTime);
     this.icon.update(deltaTime);
+    this.iconTwo.update(deltaTime);
   }
   draw(ctx) {
     // ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height);
@@ -55,5 +73,7 @@ export default class GameEngineExamplesState extends State {
     this.button.draw(ctx);
     this.checkBox.draw(ctx);
     this.icon.draw(ctx);
+    this.iconTwo.draw(ctx);
+    this.iconButton.draw(ctx);
   }
 }
