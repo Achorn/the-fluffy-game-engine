@@ -13,7 +13,7 @@ export default class GameEngineExamplesState extends State {
     this.image = assets.get("albumCover");
     this.text = new Text({
       startX: 20,
-      startY: 20,
+      startY: 15,
       text: "Game Engine Sandbox",
     });
     this.rectangle = new Rectangle({ startX: 20, startY: 50 });

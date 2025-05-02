@@ -1,10 +1,8 @@
 import ErrorState from "./states/ErrorState";
 import GameEngineExamplesState from "./states/GameEngineExamplesState.js";
 import LoadingState from "./states/LoadingState";
-// import TouchController from "../engine/TouchController.js";
 import TouchController from "../engine/TouchController.js";
 import SoundController from "../engine/SoundController.js";
-import { assets } from "../engine/assetLoader.js";
 
 let instance;
 
@@ -17,6 +15,9 @@ class Game {
     // Ccanvas Setup
     this.canvas = document.querySelector("#my-canvas");
     this.ctx = this.canvas.getContext("2d");
+    this.processingCanvas = document.querySelector("#processing-canvas");
+    this.processingCtx = this.processingCanvas.getContext("2d");
+    this.ratio = Math.min(window.devicePixelRatio, 2);
 
     // Controllers
     this.touchController = new TouchController(this.canvas);

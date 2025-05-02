@@ -32,8 +32,8 @@ export default class LoadingState extends State {
       text: this.loadingTextStates[0],
       alignment: "center",
       baseline: "middle",
-      startX: this.game.ctx.canvas.width * 0.5,
-      startY: this.game.ctx.canvas.height * 0.5,
+      startX: (this.game.ctx.canvas.width * 0.5) / this.game.ratio,
+      startY: (this.game.ctx.canvas.height * 0.5) / this.game.ratio,
     });
 
     load(assetsToLoad)
