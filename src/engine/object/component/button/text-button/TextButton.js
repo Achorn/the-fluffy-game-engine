@@ -22,6 +22,11 @@ export default class TextButton extends Button {
       color: "white",
     });
   }
+  init() {
+    super.init();
+    this.text.startX = this.startX + this.width * 0.5;
+    this.text.startY = this.startY + this.height * 0.5;
+  }
   update(deltaTime) {
     super.update(deltaTime);
   }

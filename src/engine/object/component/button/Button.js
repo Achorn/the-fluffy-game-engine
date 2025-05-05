@@ -20,6 +20,15 @@ export default class Button extends Shape {
     this.rectangle = new Rectangle({ startX, startY, color, width, height });
     this.isPressed = false;
   }
+  init() {
+    this.rectangle = new Rectangle({
+      startX: this.startX,
+      startY: this.startY,
+      color: this.color,
+      width: this.width,
+      height: this.height,
+    });
+  }
   update() {
     if (!this.isPressed) {
       if (this.game.touchController.isPressed) {

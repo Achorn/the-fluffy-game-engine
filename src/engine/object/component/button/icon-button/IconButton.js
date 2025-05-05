@@ -10,7 +10,7 @@ export default class IconButton extends Button {
     onPress = () => {},
     onRelease = () => {},
     color = "purple",
-    image,
+    image = null,
   }) {
     super({
       startX,

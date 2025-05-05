@@ -11,7 +11,7 @@ export default class HomeScreen extends State {
       text: "Home screen",
       alignment: "center",
     });
-    this.menuState = [new HomeMenu({})];
+    this.menuState = [new HomeMenu({ state: this.menuState })];
   }
   update(deltaTime) {
     this.menuState[this.menuState.length - 1].update(deltaTime);
