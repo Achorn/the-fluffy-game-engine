@@ -3,6 +3,9 @@ import GameEngineExamplesState from "./states/GameEngineExamplesState.js";
 import LoadingState from "./states/LoadingState";
 import TouchController from "../engine/TouchController.js";
 import SoundController from "../engine/SoundController.js";
+import TitleScreen from "./states/TitleScreen.js";
+import { assets } from "../engine/assetLoader.js";
+import HomeScreen from "./states/HomeScreen.js";
 
 let instance;
 
@@ -19,15 +22,23 @@ class Game {
     this.processingCtx = this.processingCanvas.getContext("2d");
     this.ratio = Math.min(window.devicePixelRatio, 2);
 
+    //assets
+    this.assets = assets;
     // Controllers
     this.touchController = new TouchController(this.canvas);
     this.soundController = new SoundController();
-    this.state = new LoadingState(
-      () => {
-        this.state = new GameEngineExamplesState();
-      },
-      (err) => (this.state = new ErrorState(err))
-    );
+    this.state = new HomeScreen({});
+    // this.state = new LoadingState({
+    //   onLoadComplete: () => {
+    //     this.state = new TitleScreen({
+    //       handleExit: () => {
+    //         this.state = new HomeScreen({});
+    //         // this.state = new GameEngineExamplesState({});
+    //       },
+    //     });
+    //   },
+    //   onFail: (err) => (this.state = new ErrorState(err)),
+    // });
   }
   init() {}
   load() {}

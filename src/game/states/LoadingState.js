@@ -3,7 +3,6 @@ import Text from "../../engine/object/text/Text";
 import State from "./State";
 
 import blockImage from "/images/blok.jpg";
-import volumeUpSVG from "/icons/volume.svg";
 import boomSOund from "/audio/sfx_exp_short_soft1.wav";
 import songSound from "/audio/josh-song.mp3";
 import fartSound from "/audio/fart-hearty-bwomp-locran-1-00-00.mp3";
@@ -20,8 +19,8 @@ let assetsToLoad = [
 ];
 
 export default class LoadingState extends State {
-  constructor(onLoadComplete, onFail) {
-    super();
+  constructor({ onLoadComplete, onFail }) {
+    super({});
     this.count = 0;
     this.intervalId = setInterval(() => {
       this.count++;

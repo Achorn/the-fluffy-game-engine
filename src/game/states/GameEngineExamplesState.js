@@ -10,7 +10,7 @@ import IconButton from "../../engine/object/component/button/icon-button/IconBut
 
 export default class GameEngineExamplesState extends State {
   constructor() {
-    super();
+    super({});
     this.image = assets.get("albumCover");
     this.text = new Text({
       startX: 20,

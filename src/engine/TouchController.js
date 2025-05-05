@@ -4,7 +4,7 @@ export default class TouchController {
     this.startCords = null;
     this.currentCords = null;
     this.init(canvas);
-    this.debug;
+    this.debug = false;
   }
   init(canvas) {
     canvas.addEventListener("touchstart", this.handleStart);
@@ -45,38 +45,40 @@ export default class TouchController {
   update(deltaTime) {}
 
   draw(ctx) {
-    if (this.isPressed === true) {
-      ctx.globalAlpha = 0.4;
+    if (this.debug) {
+      if (this.isPressed === true) {
+        ctx.globalAlpha = 0.4;
 
-      ctx.lineWidth = 2;
+        ctx.lineWidth = 2;
 
-      // Start target
-      //X
-      ctx.strokeStyle = "purple";
-      ctx.beginPath();
-      ctx.moveTo(this.startCords.x, 0);
-      ctx.lineTo(this.startCords.x, ctx.canvas.height);
-      ctx.stroke();
-      //Y
-      ctx.beginPath();
-      ctx.moveTo(0, this.startCords.y);
-      ctx.lineTo(ctx.canvas.height, this.startCords.y);
-      ctx.stroke();
+        // Start target
+        //X
+        ctx.strokeStyle = "purple";
+        ctx.beginPath();
+        ctx.moveTo(this.startCords.x, 0);
+        ctx.lineTo(this.startCords.x, ctx.canvas.height);
+        ctx.stroke();
+        //Y
+        ctx.beginPath();
+        ctx.moveTo(0, this.startCords.y);
+        ctx.lineTo(ctx.canvas.height, this.startCords.y);
+        ctx.stroke();
 
-      ctx.strokeStyle = "red";
+        ctx.strokeStyle = "red";
 
-      // Current Target
-      //X
-      ctx.beginPath();
-      ctx.moveTo(this.currentCords.x, 0);
-      ctx.lineTo(this.currentCords.x, ctx.canvas.height);
-      ctx.stroke();
-      //Y
-      ctx.beginPath();
-      ctx.moveTo(0, this.currentCords.y);
-      ctx.lineTo(ctx.canvas.height, this.currentCords.y);
-      ctx.stroke();
-      ctx.globalAlpha = 1;
+        // Current Target
+        //X
+        ctx.beginPath();
+        ctx.moveTo(this.currentCords.x, 0);
+        ctx.lineTo(this.currentCords.x, ctx.canvas.height);
+        ctx.stroke();
+        //Y
+        ctx.beginPath();
+        ctx.moveTo(0, this.currentCords.y);
+        ctx.lineTo(ctx.canvas.height, this.currentCords.y);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
     }
   }
 }
