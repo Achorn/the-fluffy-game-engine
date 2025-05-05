@@ -4,9 +4,8 @@ import Menu from "../../../engine/object/component/menu/Menu";
 import Row from "../../../engine/object/component/menu/row/Row";
 import Text from "../../../engine/object/text/Text";
 import State from "../State";
-import GameModeMenu from "./GameModeMenu";
 
-export default class HomeMenu extends State {
+export default class GameModeMenu extends State {
   constructor({ parent, handleEnter = () => {}, handleExit = () => {} }) {
     super({ handleEnter, handleExit });
     this.parent = parent;
@@ -14,35 +13,23 @@ export default class HomeMenu extends State {
       color: "purple",
       children: [
         new Row({
+          children: [new TextButton({ text: "Free Play" })],
+        }),
+        new Row({
+          children: [new TextButton({ text: "Challenge Mode" })],
+        }),
+        new Row({
           children: [
             new TextButton({
-              text: "Play",
-              onPress: () => {
-                this.parent.menuState.push(
-                  new GameModeMenu({ parent: this.parent })
-                );
-              },
+              text: "Back",
+              onPress: () => this.parent.menuState.pop(),
             }),
           ],
-          // children: [new TextButton({ text: "Options" })],
-          // children: [new IconButton({})],
-        }),
-        new Row({
-          // children: [new TextButton({ text: "Play" })],
-          // children: [new TextButton({ text: "Options" })],
-          children: [
-            new TextButton({ text: "Sound" }),
-            new TextButton({ text: "Option" }),
-          ],
-        }),
-        new Row({
-          children: [new TextButton({ text: "Exit" })],
         }),
       ],
     });
     this.menu.init();
   }
-
   update(deltaTime) {
     this.menu.update(deltaTime);
   }

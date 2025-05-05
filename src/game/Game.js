@@ -27,18 +27,18 @@ class Game {
     // Controllers
     this.touchController = new TouchController(this.canvas);
     this.soundController = new SoundController();
-    this.state = new HomeScreen({});
-    // this.state = new LoadingState({
-    //   onLoadComplete: () => {
-    //     this.state = new TitleScreen({
-    //       handleExit: () => {
-    //         this.state = new HomeScreen({});
-    //         // this.state = new GameEngineExamplesState({});
-    //       },
-    //     });
-    //   },
-    //   onFail: (err) => (this.state = new ErrorState(err)),
-    // });
+    // this.state = new HomeScreen({});
+    this.state = new LoadingState({
+      onLoadComplete: () => {
+        this.state = new TitleScreen({
+          handleExit: () => {
+            this.state = new HomeScreen({});
+            // this.state = new GameEngineExamplesState({});
+          },
+        });
+      },
+      onFail: (err) => (this.state = new ErrorState(err)),
+    });
   }
   init() {}
   load() {}
