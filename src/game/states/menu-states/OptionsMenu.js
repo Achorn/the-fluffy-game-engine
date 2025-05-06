@@ -4,19 +4,24 @@ import Row from "../../../engine/object/component/menu/row/Row";
 import Text from "../../../engine/object/text/Text";
 import State from "../State";
 
-export default class HomeMenu extends State {
-  constructor({ handleEnter = () => {}, handleExit = () => {} }) {
+export default class OptionsMenu extends State {
+  constructor({ parent, handleEnter = () => {}, handleExit = () => {} }) {
     super({ handleEnter, handleExit });
+    this.parent = parent;
     this.menu = new Menu({
       children: [
         new Row({
-          children: [new TextButton({ text: "Play" })],
+          children: [new TextButton({ text: "Sound" })],
         }),
         new Row({
-          children: [new TextButton({ text: "Options" })],
-        }),
-        new Row({
-          children: [new TextButton({ text: "Exit" })],
+          children: [
+            new TextButton({
+              text: "Back",
+              onRelease: () => {
+                this.parent.menuStateStack.pop();
+              },
+            }),
+          ],
         }),
       ],
     });

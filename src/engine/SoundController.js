@@ -3,7 +3,7 @@ import { Howl } from "howler";
 export default class SoundController {
   constructor() {
     this.sfx = {};
-    this.muted = true;
+    this.muted = false;
   }
 
   addSound(title, src, onload) {

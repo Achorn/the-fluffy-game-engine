@@ -3,6 +3,7 @@ import Menu from "../../../engine/object/component/menu/Menu";
 import Row from "../../../engine/object/component/menu/row/Row";
 import State from "../State";
 import GameModeMenu from "./GameModeMenu";
+import OptionsMenu from "./OptionsMenu";
 
 export default class HomeMenu extends State {
   constructor({ parent }) {
@@ -23,14 +24,18 @@ export default class HomeMenu extends State {
               },
             }),
           ],
-          // children: [new TextButton({ text: "Options" })],
-          // children: [new IconButton({})],
         }),
         new Row({
-          // children: [new TextButton({ text: "Play" })],
-          // children: [new TextButton({ text: "Options" })],
           children: [
-            new TextButton({ text: "Options" }),
+            new TextButton({
+              text: "Options",
+              onRelease: () => {
+                this.exit();
+                this.parent.menuStateStack.push(
+                  new OptionsMenu({ parent: this.parent })
+                );
+              },
+            }),
             new TextButton({
               text: "About",
             }),
@@ -41,8 +46,8 @@ export default class HomeMenu extends State {
             new TextButton({
               text: "Exit",
               onRelease: () => {
-                console.log("exit is pressed");
-                window.close();
+                // console.log("exit is pressed");
+                // window.close();
               },
             }),
           ],
