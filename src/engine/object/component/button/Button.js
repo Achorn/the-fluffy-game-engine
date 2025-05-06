@@ -48,11 +48,11 @@ export default class Button extends Shape {
     this.rectangle.draw(ctx);
   }
   press() {
-    this.game.assets.get("switch").play("switchDown");
+    this.game.soundController.sfx.get("switch").play("switchDown");
     this.onPress();
   }
   release() {
-    this.game.assets.get("switch").play("switchUp");
+    this.game.soundController.sfx.get("switch").play("switchUp");
     this.onRelease();
   }
 }

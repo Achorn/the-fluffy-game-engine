@@ -1,7 +1,7 @@
 import { load } from "../../engine/assetLoader";
 import Text from "../../engine/object/text/Text";
 import State from "./State";
-
+import { assets } from "../../engine/assetLoader";
 import blockImage from "/images/blok.jpg";
 import boomSOund from "/audio/sfx_exp_short_soft1.wav";
 import songSound from "/audio/josh-song.mp3";
@@ -19,7 +19,7 @@ let assetsToLoad = [
     "switch",
     switchSound,
     {
-      switchDown: [2, 60], // Start at 0ms, duration 1000ms
+      switchDown: [4, 60], // Start at 0ms, duration 1000ms
       switchUp: [64, 200], // Start at 2000ms, duration 1500ms
     },
   ],
@@ -48,6 +48,11 @@ export default class LoadingState extends State {
         throw new TypeError(error);
       })
       .then(() => {
+        this.game.soundController.sfx = new Map(
+          [...assets].filter(
+            ([key, value]) => !(value instanceof HTMLImageElement)
+          )
+        );
         onLoadComplete();
         clearInterval(this.intervalId);
       });

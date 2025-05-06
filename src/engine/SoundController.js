@@ -6,22 +6,11 @@ export default class SoundController {
     this.muted = false;
   }
 
-  addSound(title, src, onload) {
-    this.sfx[title] = new Howl({ src, preload: true, onload });
-    let sound = this.sfx[title];
-    // this.sfx[title].onLoad(() => {
-    //   console.log("loaded");
-    // });
-
-    return sound;
+  toggleMute() {
+    this.muted = !this.muted;
+    this.sfx.forEach((sound) => {
+      console.log("muting: ", sound);
+      sound.mute(this.muted);
+    });
   }
-
-  // let volume = 0.3;
-  // let muted = true;
-  // var sfx = {
-  //   impact: new Howl({ src: beepSound, volume: volume, mute: muted }),
-  //   explosion: new Howl({ src: boopSound, volume: volume, mute: muted }),
-  // };
-
-  // export default sfx;
 }

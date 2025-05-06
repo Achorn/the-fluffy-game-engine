@@ -21,7 +21,7 @@ export default class TitleScreen extends State {
   update(deltaTime) {
     if (this.game.touchController.isPressed) {
       // warm up howler js so it doesnt lag during gameplay!!
-      let initSound = this.game.assets.get("switch");
+      let initSound = this.game.soundController.sfx.get("switch");
       initSound.volume = 0;
       initSound.play("switchDown");
       initSound.stop();

@@ -11,7 +11,14 @@ export default class OptionsMenu extends State {
     this.menu = new Menu({
       children: [
         new Row({
-          children: [new TextButton({ text: "Sound" })],
+          children: [
+            new TextButton({
+              text: "Sound",
+              onRelease: () => {
+                this.game.soundController.toggleMute();
+              },
+            }),
+          ],
         }),
         new Row({
           children: [
