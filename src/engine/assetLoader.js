@@ -46,11 +46,12 @@ function loadImage(key, fileName, onComplete) {
   });
 }
 
-function loadSound(key, fileName, onComplete) {
+function loadSound(key, fileName, sprite, onComplete) {
   return new Promise((resolve, reject) => {
     const sound = new Howl({
       src: fileName,
       preload: true,
+      sprite,
     });
     sound.on(
       "load",
@@ -65,7 +66,7 @@ function loadSound(key, fileName, onComplete) {
 }
 
 export async function load(assetArray, onComplete) {
-  const promises = assetArray.map(([key, fileName]) => {
+  const promises = assetArray.map(([key, fileName, sprite]) => {
     const extention = fileName
       .substring(fileName.lastIndexOf(".") + 1)
       .toLowerCase();
@@ -73,7 +74,7 @@ export async function load(assetArray, onComplete) {
     if (type === AssetType.IMAGE) {
       return loadImage(key, fileName, onComplete);
     } else if (type === AssetType.SOUND) {
-      return loadSound(key, fileName, onComplete);
+      return loadSound(key, fileName, sprite, onComplete);
     } else {
       throw new TypeError("Error unknown Asset type: ", type);
     }

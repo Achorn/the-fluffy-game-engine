@@ -6,6 +6,13 @@ export default class State extends Object {
     this.handleEnter = handleEnter;
     this.handleExit = handleExit;
   }
+  enter() {
+    this.handleEnter();
+  }
+  exit() {
+    this.game.touchController.reset();
+    this.handleExit();
+  }
   update(deltaTime) {}
   draw(ctx) {}
 }

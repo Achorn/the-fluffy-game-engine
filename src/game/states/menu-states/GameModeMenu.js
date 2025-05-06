@@ -22,7 +22,9 @@ export default class GameModeMenu extends State {
           children: [
             new TextButton({
               text: "Back",
-              onPress: () => this.parent.menuState.pop(),
+              onRelease: () => {
+                this.parent.menuStateStack.pop();
+              },
             }),
           ],
         }),

@@ -34,17 +34,25 @@ export default class Button extends Shape {
       if (this.game.touchController.isPressed) {
         if (this.rectangle.inBounds(this.game.touchController.startCords)) {
           this.isPressed = true;
-          this.onPress();
+          this.press();
         }
       }
     } else {
       if (!this.game.touchController.isPressed) {
         this.isPressed = false;
-        this.onRelease();
+        this.release();
       }
     }
   }
   draw(ctx) {
     this.rectangle.draw(ctx);
+  }
+  press() {
+    this.game.assets.get("switch").play("switchDown");
+    this.onPress();
+  }
+  release() {
+    this.game.assets.get("switch").play("switchUp");
+    this.onRelease();
   }
 }

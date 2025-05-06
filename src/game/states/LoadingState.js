@@ -15,7 +15,14 @@ let assetsToLoad = [
   ["boom", boomSOund],
   ["music", songSound],
   ["fart", fartSound],
-  ["switch", switchSound],
+  [
+    "switch",
+    switchSound,
+    {
+      switchDown: [2, 60], // Start at 0ms, duration 1000ms
+      switchUp: [64, 200], // Start at 2000ms, duration 1500ms
+    },
+  ],
 ];
 
 export default class LoadingState extends State {

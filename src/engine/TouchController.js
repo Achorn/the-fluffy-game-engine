@@ -4,7 +4,7 @@ export default class TouchController {
     this.startCords = null;
     this.currentCords = null;
     this.init(canvas);
-    this.debug = false;
+    this.debug = true;
   }
   init(canvas) {
     canvas.addEventListener("touchstart", this.handleStart);
@@ -41,6 +41,12 @@ export default class TouchController {
   handleCancel = (e) => {
     e.preventDefault();
   };
+
+  reset() {
+    this.isPressed = false;
+    this.startCords = null;
+    this.currentCords = null;
+  }
 
   update(deltaTime) {}
 

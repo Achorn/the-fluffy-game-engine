@@ -1,14 +1,12 @@
-import IconButton from "../../../engine/object/component/button/icon-button/IconButton";
 import TextButton from "../../../engine/object/component/button/text-button/TextButton";
 import Menu from "../../../engine/object/component/menu/Menu";
 import Row from "../../../engine/object/component/menu/row/Row";
-import Text from "../../../engine/object/text/Text";
 import State from "../State";
 import GameModeMenu from "./GameModeMenu";
 
 export default class HomeMenu extends State {
-  constructor({ parent, handleEnter = () => {}, handleExit = () => {} }) {
-    super({ handleEnter, handleExit });
+  constructor({ parent }) {
+    super({});
     this.parent = parent;
     this.menu = new Menu({
       color: "purple",
@@ -17,8 +15,9 @@ export default class HomeMenu extends State {
           children: [
             new TextButton({
               text: "Play",
-              onPress: () => {
-                this.parent.menuState.push(
+              onRelease: () => {
+                this.exit();
+                this.parent.menuStateStack.push(
                   new GameModeMenu({ parent: this.parent })
                 );
               },
@@ -31,12 +30,22 @@ export default class HomeMenu extends State {
           // children: [new TextButton({ text: "Play" })],
           // children: [new TextButton({ text: "Options" })],
           children: [
-            new TextButton({ text: "Sound" }),
-            new TextButton({ text: "Option" }),
+            new TextButton({ text: "Options" }),
+            new TextButton({
+              text: "About",
+            }),
           ],
         }),
         new Row({
-          children: [new TextButton({ text: "Exit" })],
+          children: [
+            new TextButton({
+              text: "Exit",
+              onRelease: () => {
+                console.log("exit is pressed");
+                window.close();
+              },
+            }),
+          ],
         }),
       ],
     });

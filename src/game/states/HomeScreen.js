@@ -11,14 +11,14 @@ export default class HomeScreen extends State {
       text: "Home screen",
       alignment: "center",
     });
-    this.menuState = [];
-    this.menuState.push(new HomeMenu({ parent: this }));
+    this.menuStateStack = [];
+    this.menuStateStack.push(new HomeMenu({ parent: this }));
   }
   update(deltaTime) {
-    this.menuState[this.menuState.length - 1].update(deltaTime);
+    this.menuStateStack[this.menuStateStack.length - 1].update(deltaTime);
   }
   draw(ctx) {
     this.title.draw(ctx);
-    this.menuState[this.menuState.length - 1].draw(ctx);
+    this.menuStateStack[this.menuStateStack.length - 1].draw(ctx);
   }
 }

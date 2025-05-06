@@ -13,7 +13,6 @@ export default class TitleScreen extends State {
     this.copy = new Text({
       startX: window.innerWidth * 0.5,
       startY: window.innerHeight * 0.5 + 10,
-
       text: "touch anywhere to begin",
       alignment: "center",
       size: 20,
@@ -21,9 +20,13 @@ export default class TitleScreen extends State {
   }
   update(deltaTime) {
     if (this.game.touchController.isPressed) {
-      this.game.assets.get("switch").play();
-      this.game.assets.get("switch").stop();
-      this.handleExit();
+      // warm up howler js so it doesnt lag during gameplay!!
+      let initSound = this.game.assets.get("switch");
+      initSound.volume = 0;
+      initSound.play("switchDown");
+      initSound.stop();
+      initSound.volume = 1;
+      this.exit();
     }
   }
   draw(ctx) {
