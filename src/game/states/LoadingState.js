@@ -10,8 +10,8 @@ import switchSound from "/audio/switch_002.wav";
 
 let assetsToLoad = [
   ["albumCover", blockImage],
-  ["soundOnIcon", "/icons/volume-up.png"],
-  ["volumeUpIconSVG", "/icons/volumeUp.svg"],
+  // ["soundOnIcon", "/icons/volume-up.png"],
+  // ["volumeUpIconSVG", "/icons/volumeUp.svg"],
   ["boom", boomSOund],
   ["music", songSound],
   ["fart", fartSound],
