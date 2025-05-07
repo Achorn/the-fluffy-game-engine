@@ -1,5 +1,3 @@
-import { Howl } from "howler";
-
 export default class SoundController {
   constructor() {
     this.sfx = {};
@@ -9,7 +7,6 @@ export default class SoundController {
   toggleMute() {
     this.muted = !this.muted;
     this.sfx.forEach((sound) => {
-      console.log("muting: ", sound);
       sound.mute(this.muted);
     });
   }
