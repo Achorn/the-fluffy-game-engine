@@ -6,6 +6,8 @@ import SoundController from "../engine/SoundController.js";
 import TitleScreen from "./states/TitleScreen.js";
 import { assets } from "../engine/assetLoader.js";
 import HomeScreen from "./states/HomeScreen.js";
+import PhysicsController from "../engine/PhysicsController.js";
+import PhysicsTester from "./states/PhysicsTester.js";
 
 let instance;
 
@@ -27,18 +29,25 @@ class Game {
     // Controllers
     this.touchController = new TouchController(this.canvas);
     this.soundController = new SoundController();
-    // this.state = new HomeScreen({});
+    this.physicsController = new PhysicsController();
+
     this.state = new LoadingState({
       onLoadComplete: () => {
-        this.state = new TitleScreen({
-          handleExit: () => {
-            this.state = new HomeScreen({});
-            // this.state = new GameEngineExamplesState({});
-          },
-        });
+        this.state = new PhysicsTester({});
       },
       onFail: (err) => (this.state = new ErrorState(err)),
     });
+    // this.state = new LoadingState({
+    //   onLoadComplete: () => {
+    //     this.state = new TitleScreen({
+    //       handleExit: () => {
+    //         this.state = new HomeScreen({});
+    //         // this.state = new GameEngineExamplesState({});
+    //       },
+    //     });
+    //   },
+    //   onFail: (err) => (this.state = new ErrorState(err)),
+    // });
   }
   init() {}
   load() {}
