@@ -61,14 +61,14 @@ export default class PhysicsTester extends State {
     this.rigidBody = world.createRigidBody(this.rigidBodyDesc);
 
     // Create a cuboid collider attached to the dunamic rigid body
-    this.colliderDesc = RAPIER.ColliderDesc.cuboid(10, 10).setRestitution(0.5);
+    this.colliderDesc = RAPIER.ColliderDesc.cuboid(30, 30).setRestitution(0.5);
     this.collider = world.createCollider(this.colliderDesc, this.rigidBody);
   }
   update(deltaTime) {
     this.game.physicsController.update(deltaTime);
     if (this.justPressed == false && this.game.touchController.isPressed) {
       this.justPressed = true;
-      this.rigidBody.applyImpulse({ x: -10000, y: -100000.0 }, true);
+      this.rigidBody.applyImpulse({ x: -100000, y: -1000000.0 }, true);
     }
     if (this.justPressed && this.game.touchController.isPressed == false) {
       this.justPressed = false;
@@ -96,18 +96,7 @@ export default class PhysicsTester extends State {
     ctx.restore();
 
     //TITLE
-    ctx.save();
-    //Convert degrees to radian
-    //Set the origin to the center of the image
-    ctx.translate(window.innerWidth * 0.5, window.innerHeight * 0.5 - 50);
-    //Rotate the canvas around the origin
-    ctx.rotate(rad);
-    ctx.translate(-(window.innerWidth * 0.5), -(window.innerHeight * 0.5 - 50));
-    // Restore canvas state as saved from above
     this.title.draw(ctx);
-    ctx.restore();
-
-    // this.game.physicsController.draw(ctx);
 
     // draw ground
     let ground = this.groundColliderDesc;

@@ -19,7 +19,7 @@ export default class PhysicsController extends Object {
     if (!this.inited) return;
     //TODO adjust world stepping to delta time
     // console.log(deltaTime * 0.1);
-    // this.world.timestep = deltaTime;
+    this.world.timestep = deltaTime * 0.001;
     this.world.step();
   }
 

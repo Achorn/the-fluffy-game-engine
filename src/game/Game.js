@@ -33,21 +33,15 @@ class Game {
 
     this.state = new LoadingState({
       onLoadComplete: () => {
-        this.state = new PhysicsTester({});
+        this.state = new TitleScreen({
+          handleExit: () => {
+            //add state here for testing (loading and audio already set up for you )
+            this.state = new HomeScreen({});
+          },
+        });
       },
       onFail: (err) => (this.state = new ErrorState(err)),
     });
-    // this.state = new LoadingState({
-    //   onLoadComplete: () => {
-    //     this.state = new TitleScreen({
-    //       handleExit: () => {
-    //         this.state = new HomeScreen({});
-    //         // this.state = new GameEngineExamplesState({});
-    //       },
-    //     });
-    //   },
-    //   onFail: (err) => (this.state = new ErrorState(err)),
-    // });
   }
   init() {}
   load() {}

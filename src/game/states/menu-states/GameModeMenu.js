@@ -3,6 +3,7 @@ import TextButton from "../../../engine/object/component/button/text-button/Text
 import Menu from "../../../engine/object/component/menu/Menu";
 import Row from "../../../engine/object/component/menu/row/Row";
 import Text from "../../../engine/object/text/Text";
+import PhysicsTester from "../PhysicsTester";
 import State from "../State";
 
 export default class GameModeMenu extends State {
@@ -13,10 +14,19 @@ export default class GameModeMenu extends State {
       color: "purple",
       children: [
         new Row({
-          children: [new TextButton({ text: "Free Play" })],
+          children: [
+            new TextButton({
+              text: "Physics Tester",
+              onRelease: () => (this.game.state = new PhysicsTester({})),
+            }),
+          ],
         }),
         new Row({
-          children: [new TextButton({ text: "Challenge Mode" })],
+          children: [
+            new TextButton({
+              text: "More Options Later",
+            }),
+          ],
         }),
         new Row({
           children: [
