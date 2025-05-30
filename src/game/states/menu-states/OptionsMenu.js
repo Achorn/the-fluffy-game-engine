@@ -8,17 +8,22 @@ export default class OptionsMenu extends State {
   constructor({ parent, handleEnter = () => {}, handleExit = () => {} }) {
     super({ handleEnter, handleExit });
     this.parent = parent;
+
+    let toggleSoundButton = new TextButton({
+      text: this.game.soundController.muted ? "Sound: OFF" : "Sound: ON",
+    });
+    toggleSoundButton.onRelease = () => {
+      this.game.soundController.toggleMute();
+      console.log(this);
+      if (this.game.soundController.muted) {
+        toggleSoundButton.updateText("Sound: OFF");
+      } else toggleSoundButton.updateText("Sound: ON");
+    };
+
     this.menu = new Menu({
       children: [
         new Row({
-          children: [
-            new TextButton({
-              text: `Toggle Sound`,
-              onRelease: () => {
-                this.game.soundController.toggleMute();
-              },
-            }),
-          ],
+          children: [toggleSoundButton],
         }),
         new Row({
           children: [

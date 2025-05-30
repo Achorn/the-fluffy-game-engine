@@ -34,4 +34,7 @@ export default class TextButton extends Button {
     super.draw(ctx);
     this.text.draw(ctx);
   }
+  updateText(string) {
+    this.text.text = string;
+  }
 }

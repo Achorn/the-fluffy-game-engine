@@ -81,7 +81,7 @@ export default class PhysicsTester extends State {
       color: "green",
     });
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 60; i++) {
       this.interactiveBodyObjects.push(
         new CirclePhysicsObject({
           rigidDesc: RAPIER.RigidBodyDesc.dynamic().setTranslation(
