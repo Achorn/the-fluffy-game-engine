@@ -2,11 +2,16 @@
 import RAPIER from "@dimforge/rapier2d-compat";
 import Text from "../../engine/object/text/Text";
 import State from "./State";
+import TextButton from "../../engine/object/component/button/text-button/TextButton";
+import PauseScreen from "./PauseScreen";
+import Object from "../../engine/object/Object";
 
 export default class PhysicsTester extends State {
   constructor({ handleExit }) {
     super({ handleExit });
     this.justPressed = false;
+    this.barrierBodies = [];
+    this.interactiveBodyObjects = [];
 
     this.title = new Text({
       startX: window.innerWidth * 0.5,
@@ -19,18 +24,30 @@ export default class PhysicsTester extends State {
   }
   init() {
     let world = this.game.physicsController.world;
-    //floor
+
+    //Floor
     this.groundColliderDesc = RAPIER.ColliderDesc.cuboid(window.innerWidth, 80)
       .setFriction(0)
-      .setRestitution(0.7);
-    this.groundColliderDesc.setTranslation(0.0, window.innerHeight);
+      .setRestitution(0.7)
+      .setTranslation(0.0, window.innerHeight);
     world.createCollider(this.groundColliderDesc);
+    this.barrierBodies.push({
+      id: "floor",
+      desc: this.groundColliderDesc,
+      color: "green",
+    });
+
     //ceiling
     this.ceilingColliderDesc = RAPIER.ColliderDesc.cuboid(window.innerWidth, 80)
       .setFriction(0)
-      .setRestitution(0.7);
-    this.ceilingColliderDesc.setTranslation(0.0, -80);
+      .setRestitution(0.7)
+      .setTranslation(0.0, -80);
     world.createCollider(this.ceilingColliderDesc);
+    this.barrierBodies.push({
+      id: "ceiling",
+      desc: this.groundColliderDesc,
+      color: "green",
+    });
 
     // left wall
     this.leftWallColliderDesc = RAPIER.ColliderDesc.cuboid(
@@ -38,75 +55,216 @@ export default class PhysicsTester extends State {
       window.innerHeight
     )
       .setFriction(0)
-      .setRestitution(0.7);
-    this.leftWallColliderDesc.setTranslation(-80, 0);
+      .setRestitution(0.7)
+      .setTranslation(-80, 0);
     world.createCollider(this.leftWallColliderDesc);
+    this.barrierBodies.push({
+      id: "left-wall",
+      desc: this.groundColliderDesc,
+      color: "green",
+    });
 
     // left wall
     this.rightWallColliderDesc = RAPIER.ColliderDesc.cuboid(
       80,
       window.innerHeight
-    ).setFriction(0);
-    this.rightWallColliderDesc
-      .setTranslation(window.innerWidth + 80, 0)
+    )
       .setFriction(0)
+      .setTranslation(window.innerWidth + 80, 0)
       .setRestitution(0.7);
+
     world.createCollider(this.rightWallColliderDesc);
-    // Create a dynamic rigid-body.
-    this.rigidBodyDesc = RAPIER.RigidBodyDesc.dynamic().setTranslation(
-      100.0,
-      400.0
-    );
 
-    this.rigidBody = world.createRigidBody(this.rigidBodyDesc);
+    this.barrierBodies.push({
+      id: "right-wall",
+      desc: this.groundColliderDesc,
+      color: "green",
+    });
 
-    // Create a cuboid collider attached to the dunamic rigid body
-    this.colliderDesc = RAPIER.ColliderDesc.cuboid(30, 30).setRestitution(0.5);
-    this.collider = world.createCollider(this.colliderDesc, this.rigidBody);
+    for (let i = 0; i < 3; i++) {
+      this.interactiveBodyObjects.push(
+        new CirclePhysicsObject({
+          rigidDesc: RAPIER.RigidBodyDesc.dynamic().setTranslation(
+            window.innerWidth * 0.5,
+            window.innerHeight * 0.5
+          ),
+          width: 20,
+          height: 20,
+          // colliderDesc: RAPIER.ColliderDesc.cuboid(50, 50).setRestitution(0.5),
+        })
+      );
+    }
+
+    // add pause button and menu
+    this.isPaused = false;
+    this.pauseButton = new TextButton({
+      startX: 10,
+      startY: 10,
+      width: 95,
+      text: "pause",
+      onPress: () => {
+        this.isPaused = true;
+      },
+    });
+    this.pauseMenu = new PauseScreen({
+      onResume: () => (this.isPaused = false),
+      onExit: () => this.dispose(),
+    });
   }
+
   update(deltaTime) {
+    this.pauseButton.update(deltaTime);
+    if (this.isPaused) {
+      this.pauseMenu.update(deltaTime);
+      return;
+    }
     this.game.physicsController.update(deltaTime);
     if (this.justPressed == false && this.game.touchController.isPressed) {
       this.justPressed = true;
-      this.rigidBody.applyImpulse({ x: -100000, y: -1000000.0 }, true);
+      this.interactiveBodyObjects.forEach((body) => {
+        // if (body.rigidBody) {
+        body.rigidBody.applyImpulse({ x: -10000, y: -700000.0 }, true);
+        // }
+      });
+      // this.rigidBody.applyImpulse({ x: -100, y: -1000000.0 }, true);
     }
     if (this.justPressed && this.game.touchController.isPressed == false) {
       this.justPressed = false;
     }
   }
   draw(ctx) {
-    let position = this.rigidBody.translation();
-    let cube = this.colliderDesc;
-    let cubeShape = cube.shape.halfExtents;
-    var rad = this.rigidBody.rotation();
-    //Convert degrees to radian
-    // var rad = (this.rigidBody.rotation() * Math.PI) / 180;
+    this.barrierBodies.forEach((body) => {
+      let position = body.rigidBody
+        ? body.rigidBody.translation()
+        : body.desc.translation;
+      let { x: width, y: height } = body.desc.shape.halfExtents;
 
-    ctx.save();
-    //Set the origin to the center of the image
-    ctx.translate(position.x, position.y);
-    //Rotate the canvas around the origin
-    ctx.rotate(rad);
-    ctx.translate(
-      -(position.x + cubeShape.x * 0.5),
-      -(position.y + cubeShape.y * 0.5)
-    );
-    ctx.fillRect(position.x, position.y, cubeShape.x, cubeShape.y); // fill in the pixel at (10,10)
-    // Restore canvas state as saved from above
-    ctx.restore();
+      var rad = body.rigidBody ? body.rigidBody.rotation() : 0;
+
+      ctx.save();
+      //Set the origin to the center of the image
+      ctx.fillStyle = body.color || "black";
+
+      ctx.translate(position.x, position.y);
+      ctx.rotate(rad);
+      ctx.translate(-position.x, -position.y);
+      //Rotate the canvas around the origin
+      ctx.fillRect(
+        position.x - width,
+        position.y - height,
+        width * 2,
+        height * 2
+      ); // fill in the pixel at (10,10)
+      // Restore canvas state as saved from above
+      ctx.restore();
+    });
+    this.interactiveBodyObjects.forEach((body) => {
+      body.draw(ctx);
+    });
+    // this.physicsSquareObject.draw(ctx);
 
     //TITLE
     this.title.draw(ctx);
 
-    // draw ground
-    let ground = this.groundColliderDesc;
-    let groundPos = ground.translation;
-    let groundShape = ground.shape.halfExtents;
+    if (this.isPaused) {
+      this.pauseMenu.draw(ctx);
+    } else {
+      this.pauseButton.draw(ctx);
+    }
+  }
+  dispose() {
+    this.interactiveBodyObjects.forEach((body) => {
+      body.dispose();
+    });
+  }
+}
+
+class PhysicsObject extends Object {
+  constructor({ rigidDesc, desc, width = 25, height = 25 }) {
+    super({});
+    this.world = this.game.physicsController.world;
+    this.rigidBody = this.world.createRigidBody(rigidDesc);
+    this.colliderDesc = RAPIER.ColliderDesc.cuboid(
+      width,
+      height
+    ).setRestitution(0.5);
+    this.collider = this.world.createCollider(
+      this.colliderDesc,
+      this.rigidBody
+    );
+  }
+  init() {}
+  update(deltaTime) {}
+  draw(ctx) {
+    let position = this.rigidBody.translation();
+    let { x: width, y: height } = this.colliderDesc.shape.halfExtents;
+
+    var rad = this.rigidBody.rotation();
+
+    ctx.save();
+    //Set the origin to the center of the image
+    ctx.fillStyle = "Orange";
+
+    ctx.translate(position.x, position.y);
+    ctx.rotate(rad);
+    ctx.translate(-position.x, -position.y);
+    //Rotate the canvas around the origin
     ctx.fillRect(
-      groundPos.x,
-      groundPos.y - groundShape.y,
-      groundShape.x,
-      groundShape.y
-    ); // fill in
+      position.x - width,
+      position.y - height,
+      width * 2,
+      height * 2
+    ); // fill in the pixel at (10,10)
+    // Restore canvas state as saved from above
+    ctx.restore();
+  }
+  dispose() {
+    this.world.removeCollider(this.collider);
+  }
+}
+
+class CirclePhysicsObject extends Object {
+  constructor({ rigidDesc, desc, width = 25, height = 25 }) {
+    super({});
+    this.world = this.game.physicsController.world;
+    this.rigidBody = this.world.createRigidBody(rigidDesc);
+    this.colliderDesc = RAPIER.ColliderDesc.ball(width).setRestitution(0.5);
+    this.collider = this.world.createCollider(
+      this.colliderDesc,
+      this.rigidBody
+    );
+  }
+  init() {}
+  update(deltaTime) {}
+  draw(ctx) {
+    let position = this.rigidBody.translation();
+    // console.log(this.colliderDesc.shape);
+    let radius = this.colliderDesc.shape.radius;
+
+    var rad = this.rigidBody.rotation();
+
+    // ctx.save();
+    //Set the origin to the center of the image
+    ctx.fillStyle = "blue";
+
+    // ctx.translate(position.x, position.y);
+    // ctx.rotate(rad);
+    // ctx.translate(-position.x, -position.y);
+    //Rotate the canvas around the origin
+    // ctx.fillRect(
+    //   position.x - width,
+    //   position.y - height,
+    //   width * 2,
+    //   height * 2
+    // ); // fill in the pixel at (10,10)
+    // Restore canvas state as saved from above
+    // ctx.restore();
+    ctx.beginPath();
+    ctx.arc(position.x, position.y, radius, 0, 2 * Math.PI);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  }
+  dispose() {
+    this.world.removeCollider(this.collider);
   }
 }

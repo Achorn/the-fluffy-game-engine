@@ -37,6 +37,7 @@ class Game {
           handleExit: () => {
             //add state here for testing (loading and audio already set up for you )
             this.state = new HomeScreen({});
+            // this.state = new PhysicsTester({});
           },
         });
       },

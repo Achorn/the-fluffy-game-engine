@@ -41,17 +41,6 @@ export default class HomeMenu extends State {
             }),
           ],
         }),
-        new Row({
-          children: [
-            new TextButton({
-              text: "Exit",
-              onRelease: () => {
-                // console.log("exit is pressed");
-                // window.close();
-              },
-            }),
-          ],
-        }),
       ],
     });
     this.menu.init();
