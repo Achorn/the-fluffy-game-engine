@@ -33,6 +33,7 @@ class Game {
 
     this.state = new LoadingState({
       onLoadComplete: () => {
+        /// TODO: load physics barriers for gaming
         this.state = new TitleScreen({
           handleExit: () => {
             //add state here for testing (loading and audio already set up for you )

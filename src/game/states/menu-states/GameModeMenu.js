@@ -3,6 +3,7 @@ import TextButton from "../../../engine/object/component/button/text-button/Text
 import Menu from "../../../engine/object/component/menu/Menu";
 import Row from "../../../engine/object/component/menu/row/Row";
 import Text from "../../../engine/object/text/Text";
+import ChallengePlay from "../ChallengePlay";
 import PhysicsTester from "../PhysicsTester";
 import State from "../State";
 
@@ -24,7 +25,8 @@ export default class GameModeMenu extends State {
         new Row({
           children: [
             new TextButton({
-              text: "More Options Later",
+              text: "Challenge Mode",
+              onRelease: () => (this.game.state = new ChallengePlay({})),
             }),
           ],
         }),

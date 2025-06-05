@@ -5,6 +5,7 @@ import State from "./State";
 import TextButton from "../../engine/object/component/button/text-button/TextButton";
 import PauseScreen from "./PauseScreen";
 import Object from "../../engine/object/Object";
+import CirclePhysicsObject from "../../engine/object/physics/CirclePhysicsObject";
 
 export default class PhysicsTester extends State {
   constructor({ handleExit }) {
@@ -81,15 +82,15 @@ export default class PhysicsTester extends State {
       color: "green",
     });
 
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 3; i++) {
       this.interactiveBodyObjects.push(
         new CirclePhysicsObject({
           rigidDesc: RAPIER.RigidBodyDesc.dynamic().setTranslation(
             window.innerWidth * 0.5,
             window.innerHeight * 0.5
           ),
-          width: 20,
-          height: 20,
+          width: 40,
+          height: 40,
           // colliderDesc: RAPIER.ColliderDesc.cuboid(50, 50).setRestitution(0.5),
         })
       );
@@ -179,92 +180,46 @@ export default class PhysicsTester extends State {
   }
 }
 
-class PhysicsObject extends Object {
-  constructor({ rigidDesc, desc, width = 25, height = 25 }) {
-    super({});
-    this.world = this.game.physicsController.world;
-    this.rigidBody = this.world.createRigidBody(rigidDesc);
-    this.colliderDesc = RAPIER.ColliderDesc.cuboid(
-      width,
-      height
-    ).setRestitution(0.5);
-    this.collider = this.world.createCollider(
-      this.colliderDesc,
-      this.rigidBody
-    );
-  }
-  init() {}
-  update(deltaTime) {}
-  draw(ctx) {
-    let position = this.rigidBody.translation();
-    let { x: width, y: height } = this.colliderDesc.shape.halfExtents;
+// class PhysicsObject extends Object {
+//   constructor({ rigidDesc, desc, width = 25, height = 25 }) {
+//     super({});
+//     this.world = this.game.physicsController.world;
+//     this.rigidBody = this.world.createRigidBody(rigidDesc);
+//     this.colliderDesc = RAPIER.ColliderDesc.cuboid(
+//       width,
+//       height
+//     ).setRestitution(0.5);
+//     this.collider = this.world.createCollider(
+//       this.colliderDesc,
+//       this.rigidBody
+//     );
+//   }
+//   init() {}
+//   update(deltaTime) {}
+//   draw(ctx) {
+//     let position = this.rigidBody.translation();
+//     let { x: width, y: height } = this.colliderDesc.shape.halfExtents;
 
-    var rad = this.rigidBody.rotation();
+//     var rad = this.rigidBody.rotation();
 
-    ctx.save();
-    //Set the origin to the center of the image
-    ctx.fillStyle = "Orange";
+//     ctx.save();
+//     //Set the origin to the center of the image
+//     ctx.fillStyle = "Orange";
 
-    ctx.translate(position.x, position.y);
-    ctx.rotate(rad);
-    ctx.translate(-position.x, -position.y);
-    //Rotate the canvas around the origin
-    ctx.fillRect(
-      position.x - width,
-      position.y - height,
-      width * 2,
-      height * 2
-    ); // fill in the pixel at (10,10)
-    // Restore canvas state as saved from above
-    ctx.restore();
-  }
-  dispose() {
-    this.world.removeCollider(this.collider);
-  }
-}
-
-class CirclePhysicsObject extends Object {
-  constructor({ rigidDesc, desc, width = 25, height = 25 }) {
-    super({});
-    this.world = this.game.physicsController.world;
-    this.rigidBody = this.world.createRigidBody(rigidDesc);
-    this.colliderDesc = RAPIER.ColliderDesc.ball(width).setRestitution(0.5);
-    this.collider = this.world.createCollider(
-      this.colliderDesc,
-      this.rigidBody
-    );
-  }
-  init() {}
-  update(deltaTime) {}
-  draw(ctx) {
-    let position = this.rigidBody.translation();
-    // console.log(this.colliderDesc.shape);
-    let radius = this.colliderDesc.shape.radius;
-
-    var rad = this.rigidBody.rotation();
-
-    // ctx.save();
-    //Set the origin to the center of the image
-    ctx.fillStyle = "blue";
-
-    // ctx.translate(position.x, position.y);
-    // ctx.rotate(rad);
-    // ctx.translate(-position.x, -position.y);
-    //Rotate the canvas around the origin
-    // ctx.fillRect(
-    //   position.x - width,
-    //   position.y - height,
-    //   width * 2,
-    //   height * 2
-    // ); // fill in the pixel at (10,10)
-    // Restore canvas state as saved from above
-    // ctx.restore();
-    ctx.beginPath();
-    ctx.arc(position.x, position.y, radius, 0, 2 * Math.PI);
-    ctx.fillStyle = this.color;
-    ctx.fill();
-  }
-  dispose() {
-    this.world.removeCollider(this.collider);
-  }
-}
+//     ctx.translate(position.x, position.y);
+//     ctx.rotate(rad);
+//     ctx.translate(-position.x, -position.y);
+//     //Rotate the canvas around the origin
+//     ctx.fillRect(
+//       position.x - width,
+//       position.y - height,
+//       width * 2,
+//       height * 2
+//     ); // fill in the pixel at (10,10)
+//     // Restore canvas state as saved from above
+//     ctx.restore();
+//   }
+//   dispose() {
+//     this.world.removeCollider(this.collider);
+//   }
+// }
